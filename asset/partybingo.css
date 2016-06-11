@@ -19,6 +19,13 @@ a:hover {
   border: 1px solid #fff;
 }
 
+/* Custom input button */
+input,
+input:focus,
+input:hover {
+  color: #333333;
+}
+
 /*
  * Base structure
  */
