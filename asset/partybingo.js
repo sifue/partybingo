@@ -2,7 +2,7 @@
 	var pingoNumber = $('#pingo-number');
 	var startButton = $('#start-button');
 	var resetButton = $('#reset-button');
-	var historiesDiv = $('#histories')
+	var historiesDiv = $('#histories');
 	var drumAudio = $('#drum').get(0);
 	
 	// init histories
@@ -14,16 +14,16 @@
 		} else {
 			return '0' +  n.toString(10);
 		}
-	}
+	};
 	var addHistory = function(n) {
-		historiesDiv.append('<div class="col-md-1"><p class="history-number">' + toBingoString(n) + '</p></div>')
+		historiesDiv.append('<div class="col-md-1"><p class="history-number">' + toBingoString(n) + '</p></div>');
 	};
 	
 	// init number list and storage
 	var numberListAll = [];
 	var maxNumber = 75;
-	for(var i = 1; i <= maxNumber; i++) {
-		numberListAll.push(i);
+	for(var num = 1; num <= maxNumber; num++) {
+		numberListAll.push(num);
 	}
 
 	var storage = localStorage;
@@ -62,7 +62,7 @@
 		var numberList = getNumberList();
 		var i = Math.floor(Math.random() * numberList.length);
 		return numberList[i];
-	}
+	};
 	var removeNumberRamdom = function(){
 		var numberList = getNumberList();
 		if(numberList.length === 0) {
@@ -74,9 +74,9 @@
 		setNumberList(numberList);
 		var removedList = getRemovedList();
 		removedList.push(removed);
-		setRemovedList(removedList)
+		setRemovedList(removedList);
 		return removed;
-	}
+	};
 	
 	// init start button
 	var isStarted = false;
@@ -123,4 +123,4 @@
 	};
 	resetButton.click(resetClicked);
 	
-})()
+})();
