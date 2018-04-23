@@ -10,7 +10,7 @@
 		if(n > 9) {
 			return n.toString(10);
 		} else if (n < 0) {	
-			return '00'
+			return '00';
 		} else {
 			return '0' +  n.toString(10);
 		}
