@@ -107,14 +107,14 @@ body {
 /*
  * Party Bingo
  */
-#pingo-number {
+.pingo-number {
   font-size: 240pt
 }
-#start-button {
+.buttons .btn.control {
   font-size: 60pt;
   padding: 10px 140px
 }
-#reset-button {
+.buttons .btn.reset {
   font-size: 16pt;
   padding: 49px 10px
 }
