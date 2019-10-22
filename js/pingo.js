@@ -5,12 +5,12 @@ const audio = new SoundController('asset/nc79078.mp3');
 
 export const Pingo = {
   props: {
-    numberListAll: Array,
+    numbers: Array,
     initialSelectedCount: Number,
   },
   template: `
   <div class="app">
-    <p class="pingo-number">{{ numberListAll[currentNumberIndex] | formatNumber }}</p>
+    <p class="pingo-number">{{ numbers[currentNumberIndex] | formatNumber }}</p>
     <div class="buttons">
       <button v-if="!started" @click="start" class="btn btn-lg btn-default control">Start</button>
       <button v-else @click="stop" class="btn btn-lg btn-default control">Stop</button>
@@ -34,17 +34,17 @@ export const Pingo = {
   computed: {
     currentNumber() {
       const i = this.currentNumberIndex;
-      return i > 0 ? this.numberListAll[i] : 0;
+      return i > 0 ? this.numbers[i] : 0;
     },
     selectedNumbers() {
-      return this.numberListAll.slice(0, this.selectedCount);
+      return this.numbers.slice(0, this.selectedCount);
     },
   },
   methods: {
     rouletto() {
       if (this.started) {
-        this.currentNumberIndex = this.numberListAll[
-          _.random(this.selectedCount, this.numberListAll.length)
+        this.currentNumberIndex = this.numbers[
+          _.random(this.selectedCount, this.numbers.length)
         ];
         setTimeout(() => this.rouletto(), 60);
       }
@@ -60,7 +60,7 @@ export const Pingo = {
       this.currentNumberIndex = this.selectedCount;
       this.selectedCount++;
       repository.save({
-        numberListAll: this.numberListAll,
+        numbers: this.numbers,
         selectedCount: this.selectedCount,
       });
     },
@@ -68,13 +68,13 @@ export const Pingo = {
       this.started = false;
       audio.stop();
       this.currentNumberIndex = -1;
-      const numberListAll = _.shuffle(this.numberListAll);
+      const numbers = _.shuffle(this.numbers);
       const selectedCount = 0;
       repository.save({
-        numberListAll,
+        numbers,
         selectedCount,
       });
-      this.numberListAll = numberListAll;
+      this.numbers = numbers;
       this.selectedCount = selectedCount;
     },
     resetWithConfirm() {

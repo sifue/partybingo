@@ -15,21 +15,21 @@ export class App {
       maxNumber,
     });
 
-    let { numberListAll, selectedCount: initialSelectedCount } =
+    let { numbers, selectedCount: initialSelectedCount } =
       repository.load() || {};
     if (
-      !numberListAll ||
-      numberListAll.length !== maxNumber ||
+      !Array.isArray(numbers) ||
+      numbers.length !== maxNumber ||
       typeof initialSelectedCount !== 'number'
     ) {
-      numberListAll = _.shuffle(_.range(1, maxNumber + 1));
+      numbers = _.shuffle(_.range(1, maxNumber + 1));
       initialSelectedCount = 0;
     }
 
     new Vue({
       el: '#app',
       data: {
-        numberListAll,
+        numbers,
         initialSelectedCount,
       },
       components: {
@@ -37,7 +37,7 @@ export class App {
       },
       template: `
         <pingo
-          :numberListAll="numberListAll"
+          :numbers="numbers"
           :initialSelectedCount="initialSelectedCount"
         />
       `,
