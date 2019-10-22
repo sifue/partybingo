@@ -3,7 +3,7 @@
 結婚式の二次会などで利用できるJavaScriptのビンゴスクリプトです。  
 サンプルは[こちら](http://sifue.github.io/partybingo/)で動かしてみることができます。
 
-![スクリーンショット](asset/screenshot.png)	
+![スクリーンショット](asset/screenshot.png)
 
 ### 使い方
 zipファイルを解凍後、index.htmlをブラウザで開くことで使うことができます。  

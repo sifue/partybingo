@@ -10,7 +10,7 @@ export const Pingo = {
   },
   template: `
     <div class="app">
-      <p class="pingo-number">{{ numbers[currentNumberIndex] | formatNumber }}</p>
+      <p class="pingo-number">{{ currentNumber | formatNumber }}</p>
       <div class="buttons">
         <button v-if="!started" @click="start" class="btn btn-lg btn-default control">Start</button>
         <button v-else @click="stop" class="btn btn-lg btn-default control">Stop</button>
@@ -34,7 +34,7 @@ export const Pingo = {
   computed: {
     currentNumber() {
       const i = this.currentNumberIndex;
-      return i > 0 ? this.numbers[i] : 0;
+      return i >= 0 && i < this.numbers.length ? this.numbers[i] : 0;
     },
     selectedNumbers() {
       return this.numbers.slice(0, this.selectedCount);
@@ -43,9 +43,10 @@ export const Pingo = {
   methods: {
     rouletto() {
       if (this.started) {
-        this.currentNumberIndex = this.numbers[
-          _.random(this.selectedCount, this.numbers.length)
-        ];
+        this.currentNumberIndex = _.random(
+          this.selectedCount,
+          this.numbers.length - 1
+        );
         setTimeout(() => this.rouletto(), 60);
       }
     },
