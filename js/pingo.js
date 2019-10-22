@@ -9,20 +9,20 @@ export const Pingo = {
     initialSelectedCount: Number,
   },
   template: `
-  <div class="app">
-    <p class="pingo-number">{{ numbers[currentNumberIndex] | formatNumber }}</p>
-    <div class="buttons">
-      <button v-if="!started" @click="start" class="btn btn-lg btn-default control">Start</button>
-      <button v-else @click="stop" class="btn btn-lg btn-default control">Stop</button>
-      <button @click="resetWithConfirm" class="btn btn-lg btn-default reset">Reset</button>
-    </div>
-    <h3>Histories</h3>
-    <div id="histories" class="row histories">
-      <div v-for="n in selectedNumbers">
-        <div class="col-md-1"><p class="history-number">{{ n | formatNumber }}</p></div>
+    <div class="app">
+      <p class="pingo-number">{{ numbers[currentNumberIndex] | formatNumber }}</p>
+      <div class="buttons">
+        <button v-if="!started" @click="start" class="btn btn-lg btn-default control">Start</button>
+        <button v-else @click="stop" class="btn btn-lg btn-default control">Stop</button>
+        <button @click="resetWithConfirm" class="btn btn-lg btn-default reset">Reset</button>
+      </div>
+      <h3>Histories</h3>
+      <div id="histories" class="row histories">
+        <div v-for="n in selectedNumbers">
+          <div class="col-md-1"><p class="history-number">{{ n | formatNumber }}</p></div>
+        </div>
       </div>
     </div>
-  </div>
   `,
   data() {
     return {
