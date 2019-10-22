@@ -6,7 +6,7 @@ const audio = new SoundController();
 export const Pingo = {
   props: {
     numberListAll: Array,
-    initialSelectableNumberIndices: Array,
+    initialSelectedCount: Number,
   },
   template: `
   <div class="app">
@@ -28,7 +28,7 @@ export const Pingo = {
     return {
       currentNumberIndex: -1,
       started: false,
-      selectableNumberIndices: [],
+      selectedCount: 0,
     };
   },
   computed: {
@@ -37,16 +37,14 @@ export const Pingo = {
       return i > 0 ? this.numberListAll[i] : 0;
     },
     selectedNumbers() {
-      return this.numberListAll
-        .filter((_, i) => !this.selectableNumberIndices.includes(i))
-        .reverse();
+      return this.numberListAll.slice(0, this.selectedCount);
     },
   },
   methods: {
     rouletto() {
       if (this.started) {
-        this.currentNumberIndex = this.selectableNumberIndices[
-          _.random(this.selectableNumberIndices.length)
+        this.currentNumberIndex = this.numberListAll[
+          _.random(this.selectedCount, this.numberListAll.length)
         ];
         setTimeout(() => this.rouletto(), 60);
       }
@@ -59,23 +57,24 @@ export const Pingo = {
     stop() {
       this.started = false;
       audio.stop();
-      this.currentNumberIndex = this.selectableNumberIndices.pop();
+      this.currentNumberIndex = this.selectedCount;
+      this.selectedCount++;
       repository.save({
         numberListAll: this.numberListAll,
-        selectableNumberIndices: this.selectableNumberIndices,
+        selectedCount: this.selectedCount,
       });
     },
     reset() {
       this.stop();
       this.currentNumberIndex = -1;
       const numberListAll = _.shuffle(this.numberListAll);
-      const selectableNumberIndices = _.range(this.numberListAll.length);
+      const selectedCount = 0;
       repository.save({
         numberListAll,
-        selectableNumberIndices,
+        selectedCount,
       });
       this.numberListAll = numberListAll;
-      this.selectableNumberIndices = selectableNumberIndices;
+      this.selectedCount = selectedCount;
     },
     resetWithConfirm() {
       if (confirm('Do you really want to reset?')) {
@@ -84,7 +83,7 @@ export const Pingo = {
     },
   },
   created() {
-    this.selectableNumberIndices = [...this.initialSelectableNumberIndices];
+    this.selectedCount = this.initialSelectedCount;
   },
   filters: {
     formatNumber(n) {

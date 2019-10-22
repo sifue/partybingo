@@ -12,25 +12,29 @@ export function parseParams() {
 export class App {
   constructor({ maxNumber } = {}) {
     this.maxNumber = maxNumber;
-    let numberListAll, initialSelectableNumberIndices;
+    console.log('config', {
+      maxNumber,
+    });
+
+    let numberListAll, initialSelectedCount;
     const data = repository.load() || {};
     if (
       data.numberListAll &&
       data.numberListAll.length === this.maxNumber &&
-      data.selectableNumberIndices
+      typeof data.selectedCount === 'number'
     ) {
       numberListAll = data.numberListAll;
-      initialSelectableNumberIndices = data.selectableNumberIndices;
+      initialSelectedCount = data.selectedCount;
     } else {
       numberListAll = _.shuffle(_.range(1, this.maxNumber + 1));
-      initialSelectableNumberIndices = _.range(this.maxNumber);
+      initialSelectedCount = 0;
     }
 
     new Vue({
       el: '#app',
       data: {
         numberListAll,
-        initialSelectableNumberIndices,
+        initialSelectedCount,
       },
       components: {
         Pingo,
@@ -38,7 +42,7 @@ export class App {
       template: `
         <pingo
           :numberListAll="numberListAll"
-          :initialSelectableNumberIndices="initialSelectableNumberIndices"
+          :initialSelectedCount="initialSelectedCount"
         />
       `,
     });

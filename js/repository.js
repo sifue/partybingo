@@ -1,12 +1,12 @@
 const key = 'party-bingo';
 
 class Repository {
-  save({ numberListAll, selectableNumberIndices }) {
+  save({ numberListAll, selectedCount }) {
     localStorage.setItem(
       key,
       JSON.stringify({
         numberListAll,
-        selectableNumberIndices,
+        selectedCount,
       })
     );
   }
