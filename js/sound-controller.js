@@ -1,6 +1,6 @@
 export class SoundController {
-  constructor() {
-    this.audio = new Audio('asset/nc79078.mp3');
+  constructor(src) {
+    this.audio = new Audio(src);
   }
   play() {
     this.audio.play();

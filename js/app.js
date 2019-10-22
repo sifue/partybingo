@@ -11,22 +11,18 @@ export function parseParams() {
 
 export class App {
   constructor({ maxNumber } = {}) {
-    this.maxNumber = maxNumber;
     console.log('config', {
       maxNumber,
     });
 
-    let numberListAll, initialSelectedCount;
-    const data = repository.load() || {};
+    let { numberListAll, selectedCount: initialSelectedCount } =
+      repository.load() || {};
     if (
-      data.numberListAll &&
-      data.numberListAll.length === this.maxNumber &&
-      typeof data.selectedCount === 'number'
+      !numberListAll ||
+      numberListAll.length !== maxNumber ||
+      typeof initialSelectedCount !== 'number'
     ) {
-      numberListAll = data.numberListAll;
-      initialSelectedCount = data.selectedCount;
-    } else {
-      numberListAll = _.shuffle(_.range(1, this.maxNumber + 1));
+      numberListAll = _.shuffle(_.range(1, maxNumber + 1));
       initialSelectedCount = 0;
     }
 

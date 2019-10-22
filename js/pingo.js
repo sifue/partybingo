@@ -1,7 +1,7 @@
 import { SoundController } from './sound-controller.js';
 import { repository } from './repository.js';
 
-const audio = new SoundController();
+const audio = new SoundController('asset/nc79078.mp3');
 
 export const Pingo = {
   props: {
@@ -28,7 +28,7 @@ export const Pingo = {
     return {
       currentNumberIndex: -1,
       started: false,
-      selectedCount: 0,
+      selectedCount: this.initialSelectedCount,
     };
   },
   computed: {
@@ -65,7 +65,8 @@ export const Pingo = {
       });
     },
     reset() {
-      this.stop();
+      this.started = false;
+      audio.stop();
       this.currentNumberIndex = -1;
       const numberListAll = _.shuffle(this.numberListAll);
       const selectedCount = 0;
@@ -82,21 +83,9 @@ export const Pingo = {
       }
     },
   },
-  created() {
-    this.selectedCount = this.initialSelectedCount;
-  },
   filters: {
     formatNumber(n) {
-      if (!n) {
-        return '00';
-      }
-      if (n > 9) {
-        return n.toString(10);
-      } else if (n <= 0) {
-        return '00';
-      } else {
-        return `0${n.toString(10)}`;
-      }
+      return _.padStart((n || 0).toString(), 2, '0');
     },
   },
 };
